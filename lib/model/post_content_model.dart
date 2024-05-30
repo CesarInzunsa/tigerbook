@@ -34,6 +34,7 @@ class PostContentModel {
       'name': name,
       'userName': userName,
       'postContent': post.content,
+      'createdAt': DateTime.now().toIso8601String(),
     };
   }
 
@@ -48,6 +49,7 @@ class PostContentModel {
         id: map['postId'],
         userId: map['userId'],
         images: [],
+        createdAt: DateTime.parse(map['createdAt']),
       ),
     );
   }

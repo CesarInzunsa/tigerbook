@@ -2,6 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// plugins
+import 'package:intl/intl.dart';
+
 // business logic
 import '../controller/controller.dart';
 import '../controller/login_controller.dart';
@@ -18,7 +21,8 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  final ValueNotifier<UserContentModel> userContent = ValueNotifier(UserContentModel.empty());
+  final ValueNotifier<UserContentModel> userContent =
+      ValueNotifier(UserContentModel.empty());
 
   @override
   void initState() {
@@ -64,7 +68,7 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Widget _displayUserInfo() {
-    if (userContent.value.posts.isEmpty) {
+    if (userContent.value.id.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     } else {
       return Container(
@@ -88,7 +92,6 @@ class _MyProfileState extends State<MyProfile> {
   Widget _displayProfileOptions() {
     return OutlinedButton(
       onPressed: () {
-
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -180,7 +183,7 @@ class _MyProfileState extends State<MyProfile> {
 
   Widget _displayUserPosts() {
     if (userContent.value.posts.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: Text('No hay publicaciones'));
     } else {
       return ListView.builder(
         itemCount: userContent.value.posts.length,
@@ -193,7 +196,6 @@ class _MyProfileState extends State<MyProfile> {
                   _displayPostHeader(userContent.value.posts[index]),
                   _displayPostContent(userContent.value.posts[index]),
                   _displayImages(userContent.value.posts[index].post.images),
-                  _displaySaveButton(userContent.value.posts[index]),
                 ],
               ),
             ),
@@ -204,9 +206,22 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Widget _displayPostHeader(PostContentModel post) {
+    // Crear un formato de fecha
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm');
     return ListTile(
-      title: Text(post.name),
-      subtitle: Text(post.userName),
+      title: Text(
+        post.name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Text(
+        '@${post.userName}',
+        style: const TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      trailing: Text(format.format(post.post.createdAt)),
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
           post.profilePicture,
@@ -224,7 +239,7 @@ class _MyProfileState extends State<MyProfile> {
 
   Widget _displayImages(List<String> images) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [

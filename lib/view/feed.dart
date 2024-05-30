@@ -1,13 +1,16 @@
 // flutter
 import 'package:flutter/material.dart';
+
+// plugins
 import 'package:future_progress_dialog/future_progress_dialog.dart';
-import 'package:tigerbook/view/tool.dart';
+import 'package:intl/intl.dart';
 
 // business logic
 import '../controller/controller.dart';
 import '../controller/local_controller.dart';
 import '../controller/login_controller.dart';
 import '../model/post_content_model.dart';
+import 'tool.dart';
 import 'edit_post.dart';
 
 class Feed extends StatefulWidget {
@@ -30,9 +33,16 @@ class _FeedState extends State<Feed> {
   Future<void> _fetchData() async {
     List<PostContentModel> temp = await Controller().getPosts();
 
-    setState(() {
-      posts.value = temp;
-    });
+    // Check if this widget is still in the widget tree before calling setState
+    if (mounted) {
+      setState(() {
+        posts.value = temp;
+      });
+    }
+
+    // setState(() {
+    //   posts.value = temp;
+    // });
   }
 
   @override
@@ -95,9 +105,22 @@ class _FeedState extends State<Feed> {
   }
 
   Widget _displayPostHeader(PostContentModel post) {
+    // Crear un formato de fecha
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm');
     return ListTile(
-      title: Text(post.name),
-      subtitle: Text(post.userName),
+      title: Text(
+        post.name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Text(
+        '@${post.userName}',
+        style: const TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      trailing: Text(format.format(post.post.createdAt)),
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
           post.profilePicture,

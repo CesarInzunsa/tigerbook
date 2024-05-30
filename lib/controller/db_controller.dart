@@ -21,6 +21,7 @@ class DbController {
         'userId TEXT NOT NULL,'
         'name TEXT NOT NULL,'
         'userName TEXT NOT NULL,'
-        'postContent TEXT NOT NULL)');
+        'postContent TEXT NOT NULL,'
+        'createdAt TEXT NOT NULL)');
   }
 }

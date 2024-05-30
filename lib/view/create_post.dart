@@ -58,6 +58,8 @@ class _CreatePostState extends State<CreatePost> {
   Widget _displayContentFormField() {
     return TextFormField(
       controller: _contentController,
+      minLines: 1,
+      maxLines: 4,
       decoration: const InputDecoration(
         labelText: 'Contenido',
         border: OutlineInputBorder(),
@@ -132,8 +134,7 @@ class _CreatePostState extends State<CreatePost> {
 
   void _handleSavePost() {
     if (_formKey.currentState!.validate()) {
-
-      if(_imgFiles.isEmpty){
+      if (_imgFiles.isEmpty) {
         Tool.showMessage('Debe seleccionar al menos una imagen', context);
         return;
       }
@@ -144,6 +145,7 @@ class _CreatePostState extends State<CreatePost> {
         userId: LoginController().getMyProfileId(),
         content: _contentController.text,
         images: [],
+        createdAt: DateTime.now(),
       );
 
       showDialog(
@@ -152,11 +154,11 @@ class _CreatePostState extends State<CreatePost> {
           Controller().createPost(post, _imgFiles),
           message: const Text('Creando post'),
         ),
-      ).then((value){
-        if(value){
+      ).then((value) {
+        if (value) {
           Tool.showMessage('Post guardado', context);
           Navigator.pop(context);
-        }else{
+        } else {
           Tool.showMessage('Error al guardar el post', context);
         }
       });

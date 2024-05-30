@@ -46,6 +46,7 @@ class _EditPostState extends State<EditPost> {
 
   Widget _displayForm() {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
       child: Form(
         key: _formKey,
         child: Column(
@@ -64,6 +65,8 @@ class _EditPostState extends State<EditPost> {
   Widget _displayContentFormField() {
     return TextFormField(
       controller: _contentController,
+      minLines: 1,
+      maxLines: 4,
       decoration: const InputDecoration(
         labelText: 'Contenido',
         border: OutlineInputBorder(),
@@ -171,6 +174,7 @@ class _EditPostState extends State<EditPost> {
         userId: widget.post.userId,
         content: _contentController.text,
         images: widget.post.images,
+        createdAt: DateTime.now(),
       );
 
       showDialog(

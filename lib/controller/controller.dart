@@ -75,6 +75,7 @@ class Controller {
       await baseRemota.collection('posts').doc(post.id).update({
         'content': post.content,
         'images': post.images,
+        'createdAt': post.createdAt,
       });
 
       // Retonar true si se actualizó correctamente
@@ -172,6 +173,7 @@ class Controller {
         'userId': newPost.userId,
         'content': newPost.content,
         'images': newPost.images,
+        'createdAt': newPost.createdAt,
       });
 
       // Retornar true si se insertó correctamente
@@ -188,7 +190,10 @@ class Controller {
     //log('1');
 
     // Obtener toda la información de los usuarios desde firebase
-    var postResult = await baseRemota.collection('posts').get();
+    var postResult = await baseRemota
+        .collection('posts')
+        .orderBy('createdAt', descending: true)
+        .get();
 
     for (var doc in postResult.docs) {
       Map<String, dynamic> data = doc.data();

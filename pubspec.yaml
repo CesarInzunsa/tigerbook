@@ -26,6 +26,7 @@ dependencies:
   sqflite: ^2.3.3+1
   path: ^1.9.0
   flutter_launcher_icons: ^0.13.1
+  intl: ^0.19.0
 
 # The following dev_dependencies section is for packages that are only needed during development.
 dev_dependencies:

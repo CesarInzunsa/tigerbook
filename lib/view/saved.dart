@@ -1,6 +1,9 @@
 // flutter
 import 'package:flutter/material.dart';
 
+// plugins
+import 'package:intl/intl.dart';
+
 // business logic
 import '../model/post_content_model.dart';
 import '../controller/local_controller.dart';
@@ -64,8 +67,6 @@ class _SavedState extends State<Saved> {
                 children: [
                   _displayPostHeader(posts.value[index]),
                   _displayPostContent(posts.value[index]),
-                  //_displayImages(posts.value[index].post.images),
-                  //_displaySaveButton(posts.value[index]),
                 ],
               ),
             ),
@@ -112,9 +113,22 @@ class _SavedState extends State<Saved> {
   }
 
   Widget _displayPostHeader(PostContentModel post) {
+    // Crear un formato de fecha
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm');
     return ListTile(
-      title: Text(post.name),
-      subtitle: Text(post.userName),
+      title: Text(
+        post.name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Text(
+        '@${post.userName}',
+        style: const TextStyle(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      trailing: Text(format.format(post.post.createdAt)),
       leading: const CircleAvatar(child: Icon(Icons.person_outline)),
     );
   }
