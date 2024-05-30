@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614691859056",
+    "project_id": "tigerbook-e80ce",
+    "storage_bucket": "tigerbook-e80ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614691859056:android:436bcd4e6aed37618ca2b5",
+        "android_client_info": {
+          "package_name": "mx.edu.ittepic.tigerbook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-QmtxIGZrfXolUXqZaRQ4k6-W7eBTtgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
